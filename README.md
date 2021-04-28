@@ -1,4 +1,4 @@
-This book shelf project include front end and back end.
+This book shelf project includes front end and back end.
 
 1, There are two page, first page is main book shelf page, and second page is search page.
 
