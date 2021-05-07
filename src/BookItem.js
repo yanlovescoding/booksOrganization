@@ -1,9 +1,9 @@
 import { React, Component } from 'react';
-import BookshelfChanger from './BookshelfChanger';
+import CaseSwitcher from './CaseSwitcher';
 
-class Book extends Component {
+class BookItem extends Component {
   render() {
-    const { book, shelf, onMove } = this.props;
+    const { aBook, aBookCaseKey, onMove } = this.props;
     return (
       <li>
     <div className="book">
@@ -12,23 +12,21 @@ class Book extends Component {
           className="book-cover"
           style={{ width: 128, height: 193, backgroundImage:
           `url(${
-               book.imageLinks
-                ? book.imageLinks.thumbnail
+               aBook.imageLinks
+                ? aBook.imageLinks.thumbnail
                 : 'icons/book-placeholder.svg'
             })`
           }}
         />
-        <BookshelfChanger book={book} shelf={shelf} onMove={onMove} />
+        <CaseSwitcher aBook={aBook} aBookCaseKey={aBookCaseKey} onMove={onMove} />
       </div>
-      <div className="book-title">{book.title}</div>
+      <div className="book-title">{aBook.title}</div>
       <div className="book-authors">
-        {book.authors ? book.authors.join(', ') : 'Unknown Author'}
+        {aBook.authors ? aBook.authors.join(', ') : 'Unknown Author'}
       </div>
     </div>
   </li>
     );
   }
 }
-
-
-export default Book;
+export default BookItem;

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class BookshelfChanger extends Component {
+class CaseSwitcher extends Component {
   state = {
-    value: this.props.shelf
+    value: this.props.aBookCaseKey
   };
   handleChange = event => {
     const { value } = event.target;
     this.setState({ value });
-    this.props.onMove(this.props.book, value);
+    this.props.onMove(this.props.aBook, value);
   };
   render() {
     return (
@@ -26,4 +26,4 @@ class BookshelfChanger extends Component {
   }
 }
 
-export default BookshelfChanger;
+export default CaseSwitcher;

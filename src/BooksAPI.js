@@ -26,8 +26,8 @@ export const getAll = () =>
 	.then(data => data.books)
 
 
-export const update = (bookID, shelf) =>
-  fetch(`${api}/books/${bookID}`, {
+export const update = (book, shelf) =>
+  fetch(`${api}/books/${book}`, {
     method: 'PUT',
     headers: {
       ...headers,

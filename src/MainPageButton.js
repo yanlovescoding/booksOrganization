@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-class OpenSearchButton extends Component {
+class MainPageButton extends Component {
   render() {
     return (
       <div className="open-search">
-        <Link to="search">
+        <Link to="searchPage">
           <div>Add a Book</div>
         </Link>
       </div>
@@ -13,4 +13,4 @@ class OpenSearchButton extends Component {
 };
 }
 
-export default OpenSearchButton;
+export default MainPageButton;

@@ -2,103 +2,79 @@ import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import { Route } from 'react-router-dom';
-import ListBooks from './ListBooks';
-import SearchBooks from './SearchBooks';
+import MainPage from './MainPage';
+import SearchPage from './SearchPage';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    myBooks:[],
-    bookshelves:[
-      { key: 'currentlyReading', name: 'Currently Reading' },
-      { key: 'wantToRead', name: 'Want to Read' },
-      { key: 'read', name: 'Read' },
+    allBooks:[],
+    bookCase:[
+      { bookCaseKey: 'currentlyReading', bookCaseName: 'Currently Reading' },
+      { bookCaseKey: 'wantToRead', bookCaseName: 'Want to Read' },
+      { bookCaseKey: 'read', bookCaseName: 'Read' },
     ],
-    searchBooks: [],
-    error: false
+    searchResult: []
   }
   };
 
   componentDidMount = () => {
-    BooksAPI.getAll()
-      .then(books => {
-        this.setState({ myBooks: books });
+    BooksAPI.getAll().then(res => {
+        this.setState({ allBooks: res });
       })
-      .catch(err => {
-        this.setState({ error: true });
-        console.log("Error in getAll(): ", err);
+  };
+
+  search = (q) => {
+      BooksAPI.search(q).then(res => {
+          this.setState({ searchResult: res });
       });
   };
 
-  searchForBooks = (query) => {
-    if (query.length > 0) {
-      BooksAPI.search(query).then(books => {
-        if (books.error) {
-          this.setState({ searchBooks: [] });
-        } else {
-          this.setState({ searchBooks: books });
-        }
-      });
-    } else {
-      console.log("The query length <= 0 ");
-      this.setState({ searchBooks: [] });
-    }
-  };
-
-  resetSearch = () => {
-    this.setState({ searchBooks: [] });
+  reset = () => {
+    this.setState({ searchResult: [] });
   };
 
  moveBook = (book, shelf) => {
-    BooksAPI.update(book, shelf).catch(err => {
-      console.log(err);
-      this.setState({ error: true });
-    });
+    console.log("book+++++++", book);
+    BooksAPI.update(book, shelf);
     if (shelf === 'none') {
-      this.setState(prevState => ({
-        myBooks: prevState.myBooks.filter(b => b.id !== book.id)
+      this.setState(s => ({
+        myBooks: s.allBooks.filter(b => b.id !== book.id)
       }));
     } else {
-      console.log("++++++++book object: ", book);
-      console.log("++++++++shelf: destination shelf: ", shelf);
-      console.log("++++++++book.shelf: previous shelf: ", book.shelf);
       book.shelf = shelf;
-      this.setState(prevState => ({
+      this.setState(s => ({
        // myBooks: [...prevState.myBooks,book]
-       myBooks: prevState.myBooks.filter(b => {if (b.id !== book.id) {return b}}).concat(book)
+       myBooks: s.allBooks.filter(b => {if (b.id !== book.id) {return b}}).concat(book)
       }));
     }
   };
 
   render() {
-    const { myBooks, searchBooks, error,bookshelves } = this.state;
-    if (error) {
-      return <div>Network error. Please try again later.</div>;
-    }
     return (
       <div className="app">
         <Route
           exact
           path="/"
           render={() => (
-            <ListBooks
-              bookshelves={bookshelves}
-              books={myBooks}
+            <MainPage
+              bookCase={this.state.bookCase}
+              allBooks={this.state.allBooks}
               onMove={this.moveBook}
             />
           )}
         />
         <Route
-          path="/search"
+          path="/searchPage"
           render={() => (
-            <SearchBooks
-              searchBooks={searchBooks}
-              myBooks={myBooks}
-              onSearch={this.searchForBooks}
+            <SearchPage
+              searchBooks={this.state.searchResult}
+              myBooks={this.state.allBooks}
+              onSearch={this.search}
               onMove={this.moveBook}
-              onResetSearch={this.resetSearch}
+              onResetSearch={this.reset}
             />
           )}
         />

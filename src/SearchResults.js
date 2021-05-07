@@ -1,5 +1,5 @@
 import React from 'react';
-import Book from './Book';
+// import Book from './Book';
 
 const SearchResults = props => {
   const { searchBooks, myBooks, onMove } = props;
@@ -16,14 +16,7 @@ const SearchResults = props => {
   return (
     <div className="search-books-results">
       <ol className="books-grid">
-        {updatedBooks.map(book => (
-          <Book
-            key={book.id}
-            book={book}
-            shelf={book.shelf ? book.shelf : 'none'}
-            onMove={onMove}
-          />
-        ))}
+
       </ol>
     </div>
   );
