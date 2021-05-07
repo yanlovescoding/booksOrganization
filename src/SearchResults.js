@@ -1,8 +1,8 @@
 import React from 'react';
-// import Book from './Book';
+import BookItem from './BookItem';
 
 const SearchResults = props => {
-  const { searchBooks, myBooks, onMove } = props;
+  const { searchBooks, myBooks,onMove } = props;
 
   const updatedBooks = searchBooks.map(book => {
     myBooks.map(b => {
@@ -16,7 +16,9 @@ const SearchResults = props => {
   return (
     <div className="search-books-results">
       <ol className="books-grid">
-
+        {updatedBooks.map(aBook => (
+          <BookItem key={aBook.id} aBook={aBook} aBookCaseKey={aBook.shelf} onMove={onMove} />
+        ))}
       </ol>
     </div>
   );

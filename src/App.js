@@ -41,13 +41,13 @@ class App extends React.Component {
     BooksAPI.update(book, shelf);
     if (shelf === 'none') {
       this.setState(s => ({
-        myBooks: s.allBooks.filter(b => b.id !== book.id)
+        allBooks: s.allBooks.filter(b => b.id !== book.id)
       }));
     } else {
       book.shelf = shelf;
       this.setState(s => ({
        // myBooks: [...prevState.myBooks,book]
-       myBooks: s.allBooks.filter(b => {if (b.id !== book.id) {return b}}).concat(book)
+       allBooks: s.allBooks.filter(b => {if (b.id !== book.id) {return b}}).concat(book)
       }));
     }
   };

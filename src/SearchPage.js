@@ -5,7 +5,7 @@ import SearchBooksInput from './SearchBooksInput';
 
 class SearchPage extends Component {
   render() {
-    const { searchBooks, myBooks, onSearch, onResetSearch,onMove } = this.props;
+    const { searchBooks, myBooks, onSearch, onResetSearch,onMove,aBookCase } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
